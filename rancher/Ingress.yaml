@@ -1,0 +1,22 @@
+
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: clusters.kubectl.tk
+  annotations:
+    kubernetes.io/ingress.class: "nginx"    
+    cert-manager.io/issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - clusters.kubectl.tk
+    secretName: rancher-web-tls
+  rules:
+  - host: clusters.kubectl.tk
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: rancher
+          servicePort: 80
+
